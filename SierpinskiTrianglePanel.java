@@ -37,8 +37,12 @@ public class SierpinskiTrianglePanel extends JPanel {
 				if(gr>=245) {
 					gr=0;
 				}
+				else if(r>=245) {
+					r=0;
+				}
 				else {
 					gr+=50;
+					r+=15;
 				}
 				
 				int xpoints[] = {p1.x,p2.x,p3.x};
