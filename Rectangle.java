@@ -1,4 +1,4 @@
-package eddu.smg;
+package edu.smg;
 
 public class Rectangle extends GeometricObject {
 	private double width;
@@ -15,8 +15,8 @@ public class Rectangle extends GeometricObject {
 	public Rectangle(double width, double height, String color, boolean filled) {
 		this.width = width;
 		this.height = height;
-		setColor(color);
-		setFilled(filled);
+//		setColor(color);
+//		setFilled(filled);
 	}
 
 	/** Return width */
@@ -48,4 +48,8 @@ public class Rectangle extends GeometricObject {
 	public double getPerimeter() {
 		return 2 * (width + height);
 	}
+	 public String toString() {
+		 return "Rectangle" + " width is " + getWidth() + " height is "+ getHeight()+ "\n";
+	 }
+
 }

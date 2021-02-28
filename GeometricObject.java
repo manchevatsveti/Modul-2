@@ -1,4 +1,5 @@
-package eddu.smg;
+package edu.smg;
+
 
 public abstract class GeometricObject implements Comparable<GeometricObject> {
 	protected String color = "white";
@@ -53,12 +54,19 @@ public abstract class GeometricObject implements Comparable<GeometricObject> {
 		return "created on " + dateCreated + "\ncolor: " + color + " and filled: " + filled;
 	}
 	
-	public int compareTo(GeometricObject obj) {
-		return Integer.compare((int)this.getArea(), (int)obj.getArea());
-	}
-	
 //	public abstract double getArea();
 //	public abstract double getPerimeter();
 	
+	@Override
+	public int compareTo(GeometricObject o) {
+		// TODO Auto-generated method stub
+		if(getArea()>o.getArea()) {
+			return 1;
+		}
+		else if (getArea()<o.getArea()) {
+			return -1;
+		}
+		return 0;
+	}
 	
 }
