@@ -2,6 +2,9 @@ package demo;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.PriorityQueue;
+
 import javax.swing.Timer;
 import java.awt.*;
 import javax.swing.*;
@@ -11,7 +14,7 @@ import javax.swing.JPanel;
 
 class BallPanel extends JPanel {
 	private int delay = 10;
-	private ArrayList<Ball> list = new ArrayList<Ball>();
+	private PriorityQueue<Ball> list = new PriorityQueue(Collections.reverseOrder());
 // Create a timer with the initial delay
 	protected Timer timer = new Timer(delay, new TimerListener());
 
@@ -33,8 +36,7 @@ class BallPanel extends JPanel {
 			public void mousePressed(MouseEvent e) {
 				int x=e.getX();
 			    int y=e.getY();
-			    for(int j=0 ;j<list.size();j++) {
-					Ball nextBall = (Ball) list.get(j);
+			    for(Ball nextBall : list) {
 					double distance = BallPanel.distance(x, y, nextBall.x, nextBall.y);
 					
 					if(nextBall.radius>=distance) {
@@ -66,19 +68,28 @@ class BallPanel extends JPanel {
 	}
 
 	public void add() {
-		list.add(new Ball());
+		list.offer(new Ball());
+		System.out.println("Queue");
+		for(Ball ball: list) {
+			System.out.println(ball.radius);
+		}
+		
 	}
 
 	public void subtract() {
 		if (list.size() > 0)
-			list.remove(list.size() - 1); // Remove the last ball
+			list.poll(); // Remove the first ball from the queue
+		System.out.println("Queue");
+		for(Ball ball: list) {
+			System.out.println(ball.radius);
+		}
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		for (int i = 0; i < list.size(); i++) {
-			Ball ball = (Ball) list.get(i); // Get a ball
+		for (Ball ball : list) {
+			
 			g.setColor(ball.color); // Set ball color
 			// Check boundaries
 			if (ball.x < 0 || ball.x > getWidth())
@@ -91,16 +102,19 @@ class BallPanel extends JPanel {
 			g.fillOval(ball.x - ball.radius, ball.y - ball.radius, ball.radius * 2, ball.radius * 2);
 		}
 		ArrayList<Ball> remove = new ArrayList<>();
-		for(int i=0;i<list.size();i++) {
-			Ball ball = (Ball) list.get(i);
-			for(int j=i+1 ;j<list.size();j++) {
-				Ball nextBall = (Ball) list.get(j);
+		for(Ball ball : list) {
+			if(!remove.contains(ball)) {
+			for(Ball nextBall : list) {
+				
+				if(nextBall != ball) {
 				int rad = ball.radius + nextBall.radius;
 				double distance = BallPanel.distance(ball.x, ball.y, nextBall.x, nextBall.y);
 				
 				if(rad>=distance) {
 					remove.add(nextBall);
 					ball.radius+=nextBall.radius;
+						}
+					}
 				}
 			}
 		}

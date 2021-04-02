@@ -1,0 +1,10 @@
+book 2
+bag 1
+hand 1
+foot 2
+zoo 2
+pirate 3
+you 2
+lines 2
+draft 1
+ 16
